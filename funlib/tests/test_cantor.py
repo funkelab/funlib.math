@@ -7,7 +7,7 @@ class TestCantor(unittest.TestCase):
     def test_1d(self):
 
         for i in range(1000):
-            assert math.cantor_number((i,)) == i + 1
+            assert math.cantor_number((i,)) == i
 
     def test_2d(self):
 
@@ -22,7 +22,7 @@ class TestCantor(unittest.TestCase):
                   (1, 2),
                   (2, 1),
                   (3, 0)]):
-            assert math.cantor_number(x) == i + 1
+            assert math.cantor_number(x) == i
 
     def test_4d(self):
 
@@ -52,7 +52,7 @@ class TestCantor(unittest.TestCase):
                   (1, 0, 0, 2),
                   (0, 0, 2, 1)]):
 
-            assert math.cantor_number(x) == i + 1
+            assert math.cantor_number(x) == i
 
     def test_inverse(self,dims=3):
         for i in range(100):
