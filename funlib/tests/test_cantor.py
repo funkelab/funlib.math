@@ -2,6 +2,7 @@ from funlib import math
 import unittest
 import random
 
+
 class TestCantor(unittest.TestCase):
 
     def test_1d(self):
@@ -54,7 +55,8 @@ class TestCantor(unittest.TestCase):
 
             assert math.cantor_number(x) == i
 
-    def test_inverse(self,dims=3):
+    def test_inverse(self, dims=3):
         for i in range(100):
-            coord = [ random.randint(0,1000) for x in range(dims) ]
-            assert coord == math.inv_cantor_number(math.cantor_number(coord),dims)
+            coord = [random.randint(0, 1000) for x in range(dims)]
+            assert coord == math.inv_cantor_number(
+                    math.cantor_number(coord), dims)
