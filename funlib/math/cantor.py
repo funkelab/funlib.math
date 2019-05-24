@@ -37,7 +37,7 @@ def inv_cantor_number(c, dims=3):
     i actually used wolfram to solve for the inverse function in 3 dimensions
     '''
     if dims == 1:
-        return [c]
+        return [int(c)]
     el = inv_pyramide_volume(c, dims)
     pv = int(pyramide_volume(dims, el))
     coord = inv_cantor_number(c - pv, dims - 1)
@@ -48,27 +48,49 @@ def inv_cantor_number(c, dims=3):
 def pyramide_volume(dims, edge_length):
     if edge_length == 0:
         return 0
-    prod = 1
-    norm = 1
+    v = 1
     for d in range(dims):
-        prod *= edge_length + d
-        norm *= d + 1
-    return prod/norm
+        v *= edge_length + d
+        v /= d + 1
+    return int(v)
 
 
 def inv_pyramide_volume(c, dims):
+    el = int(floating_inv_pyramide_volume(c, dims))
+    pv = pyramide_volume(dims, el)
+    if c == pv or dims < 2:
+        return el
+    increment = 1 if pv < c else -1
+    while True:
+        new_el = el + increment
+        pv = pyramide_volume(dims, int(new_el))
+        if increment > 0 and pv > c:
+            break
+        elif increment < 0 and pv <= c:
+            el = new_el
+            break
+        else:
+            el = new_el
+    return el
+
+
+def floating_inv_pyramide_volume(c, dims):
     '''
     This is gross however I am not sure there is a simple way to generalize
-    the inverse of pyramide_volume. I have calculated it for 3 and 2 dimension
+    the inverse of pyramide_volume. I  have calculated it for 3 and 2 dimension
     '''
     if c == 0:  # the dims 3 function is not defined at c==0
         return 0
     if dims == 3:
-        return int(np.floor(
-            (np.sqrt(3) * np.sqrt(243 * c**2 - 1) + 27 * c)**(1. / 3) /
-            3**(2. / 3) +
-            1 / (3**(1. / 3) * (np.sqrt(3) * np.sqrt(243 * c**2 - 1) +
-                                27 * c)**(1. / 3)) - 1))
+        # this is an approximation to the commented
+        # out function that avoids squaring c
+        return int((np.sqrt(729) * c + 27 * c)**(1 / 3) / 3**(2 / 3) +
+                   1/(3 * np.sqrt(729) * c + 81 * c)**(1 / 3) - 1)
+        # return int(np.floor(
+        #    (np.sqrt(3) * np.sqrt(243 * c**2 - 1) + 27 * c)**(1. / 3) /
+        #    3**(2. / 3) +
+        #    1 / (3**(1. / 3) * (np.sqrt(3) * np.sqrt(243 * c**2 - 1) +
+        #                        27 * c)**(1. / 3)) - 1))
     if dims == 2:
         return int(np.floor((np.sqrt(8*c + 1) - 1)/2))
     if dims == 1:

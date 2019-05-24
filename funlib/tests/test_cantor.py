@@ -55,8 +55,8 @@ class TestCantor(unittest.TestCase):
 
             assert math.cantor_number(x) == i
 
-    def test_inverse(self, dims=3):
-        for i in range(100):
-            coord = [random.randint(0, 1000) for x in range(dims)]
+    def test_inverse(self, max_val=1000000000, dims=3):
+        for i in range(1000):
+            coord = [random.randint(0, max_val) for x in range(dims)]
             assert coord == math.inv_cantor_number(
                     math.cantor_number(coord), dims)
