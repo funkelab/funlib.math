@@ -58,7 +58,7 @@ def pyramide_volume(dims, edge_length):
 def inv_pyramide_volume(c, dims):
     el = int(floating_inv_pyramide_volume(c, dims))
     pv = pyramide_volume(dims, el)
-    if c == pv or dims < 2:
+    if c == pv or dims == 1:
         return el
     increment = 1 if pv < c else -1
     while True:
@@ -86,12 +86,7 @@ def floating_inv_pyramide_volume(c, dims):
         # out function that avoids squaring c
         return int((np.sqrt(729) * c + 27 * c)**(1 / 3) / 3**(2 / 3) +
                    1/(3 * np.sqrt(729) * c + 81 * c)**(1 / 3) - 1)
-        # return int(np.floor(
-        #    (np.sqrt(3) * np.sqrt(243 * c**2 - 1) + 27 * c)**(1. / 3) /
-        #    3**(2. / 3) +
-        #    1 / (3**(1. / 3) * (np.sqrt(3) * np.sqrt(243 * c**2 - 1) +
-        #                        27 * c)**(1. / 3)) - 1))
     if dims == 2:
         return int(np.floor((np.sqrt(8*c + 1) - 1)/2))
     if dims == 1:
-        return 1
+        return 0
