@@ -1,5 +1,0 @@
-numpy
-flake8
-pytest
-pytest-cov
-numpy
